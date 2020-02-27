@@ -1,4 +1,5 @@
 src/*.swp
+test/*.swp
 .DS_Store
 .vscode
 # Prerequisites

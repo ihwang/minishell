@@ -17,7 +17,7 @@ void sigint_handler(int signo)
 	a = signo;
    printf( "Ctrl-C 키를 눌루셨죠!!\n");
    printf( "또 누르시면 종료됩니다.\n");
-   signal( SIGINT, old_fun);   // 또는 signal( SIGINT, SIG_DFL);
+   signal( SIGINT, sigint_handler);   // 또는 signal( SIGINT, SIG_DFL);
 }
 
 int main( void)

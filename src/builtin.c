@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/02/28 23:42:34 by tango            ###   ########.fr       */
+/*   Updated: 2020/02/29 01:25:43 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ void        run_builtin(t_comm *coms, char **env)
     else if (!ft_strcmp(coms[i].comm, "setenv"))
         ft_setenv();
     else if (!ft_strcmp(coms[i].comm, "unsetenv"))
-        ft_unsetenv();*/
+        ft_unsetenv();
+    */
 }
 
 void		parse_line(char **line, char **env)

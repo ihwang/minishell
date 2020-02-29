@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/02/28 22:47:14 by tango            ###   ########.fr       */
+/*   Updated: 2020/02/29 02:48:11 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ typedef struct      s_comm
     struct s_comm   *next;
 }                   t_comm;
 
-void			    parse_line(char **line, char **env);
+void			    parse_line(char **line, char ***env);
 #endif

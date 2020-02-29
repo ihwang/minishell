@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 23:49:46 by tango            ###   ########.fr       */
+/*   Updated: 2020/02/29 02:47:29 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			minishell(char **env)
 		signal(SIGINT, signal_handler);
 		get_prompt(env);
 		get_next_line(0, &line);
-		parse_line(&line, env);
+		parse_line(&line, &env);
 	}
 	return (0);
 }

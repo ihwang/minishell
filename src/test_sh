@@ -1,0 +1,6 @@
+#!/bin/sh
+
+name="IN TAEK HWANG"
+echo $name
+
+echo First: $1, Second $2

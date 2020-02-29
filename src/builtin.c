@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/02/29 03:55:04 by tango            ###   ########.fr       */
+/*   Updated: 2020/02/29 22:18:14 by tango            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void        com_del(t_comm *c)
 {
     ft_strdel(&c->comm);
-    c->arg_nb ? ft_strlst_del(&c->args, c->arg_nb) : 0;
+    c->arg_nb ? ft_strlst_del(&c->args, c->arg_nb + 1) : 0;
     free(c);
 }
 
@@ -33,8 +33,8 @@ char        *get_env(char ***env, char *name)
 void        clear_com(t_comm *c)
 {
     c->arg_nb = 0;
-//  c->comm = NULL;
-//  c->args = NULL;
+	c->comm = NULL;
+	c->args = NULL;
     c->next = NULL;
 }
 
@@ -50,10 +50,21 @@ void        get_cmd_arg(char *cmd, t_comm *coms)
     coms->comm = (char*)malloc(PATH_MAX);
     ft_bzero(coms->comm, PATH_MAX);
     ft_strcpy(coms->comm, split[0]);
-    coms->args = &split[1];
     coms->arg_nb = i - 1;
+	if (coms->arg_nb)
+	{
+		coms->args = (char**)malloc(sizeof(char*) * (coms->arg_nb + 1));
+		i = -1;
+		while (split[++i + 1])
+		{
+			coms->args[i] = (char*)malloc(sizeof(char) * PATH_MAX);
+			ft_bzero(coms->args[i], PATH_MAX);
+			ft_strcat(coms->args[i], split[i + 1]);
+		}
+		coms->args[i] = NULL;
+	}
     coms->next = NULL;
-    ft_strlst_del(&split, i + 1);
+    ft_strlst_del(&split, coms->arg_nb + 2);
 }
 
 t_comm		*get_coms(char **line)
@@ -67,14 +78,14 @@ t_comm		*get_coms(char **line)
     cmd_lst = ft_strsplit(*line, ';');
     ft_strdel(line);
     coms = (t_comm*)malloc(sizeof(t_comm));
-  //  clear_com(coms);
+	clear_com(coms);
     c_p = coms;
     get_cmd_arg(cmd_lst[0], c_p);
     i = 0;
     while (cmd_lst[++i])
     {
         c_t = (t_comm*)malloc(sizeof(t_comm));
-  //      clear_com(c_t);
+		clear_com(c_t);
         get_cmd_arg(cmd_lst[i], c_t);
         c_p->next = c_t;
         c_p = c_p->next;
@@ -150,29 +161,55 @@ void        cd_exchange(char ***env)
 
     temp = (char*)malloc(PATH_MAX);
     ft_bzero(temp, PATH_MAX);
-
     pwd = get_env(env, "PWD=");
     pwd = ft_strstr_e(pwd, "PWD=");
-
+	ft_strcat(temp, pwd);
     old = get_env(env, "OLDPWD=");
-    old = ft_strstr_e(pwd, "OLDPWD=");
-
+    old = ft_strstr_e(old, "OLDPWD=");
     ft_bzero(pwd, PATH_MAX - 4);
     ft_strcat(pwd, old);
-    ft_bzero(
-///////////////////working on this function!!!//////////////////
+    ft_bzero(old, PATH_MAX - 7);
+	ft_strcat(old, temp);
+	ft_strdel(&temp);
+}
+
+void		tild_dol_intp(char *str, char ***env)
+{
+	char	*home;
+
+	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
+	{
+		home = get_env(env, "HOME=");
+		home = ft_strstr_e(home, "HOME=");
+		
+
+
+}
+
+void		cd_path_finder(t_comm *c, char ***env)
+{
+	char	*old;
+	char	*pwd;
+
+	old = get_env(env, "OLDPWD=");
+	old = ft_strstr_e(old, "OLDPWD=");
+	ft_bzero(old, PATH_MAX - 7);
+	pwd = get_env(env, "PWD=");
+	pwd = ft_strstr_e(pwd, "PWD=");
+	ft_strcat(old, pwd);
+	tild_dol_intp(c->args[0], env);
+	bzero(pwd, PATH_MAX - 4);
+	ft_strcat(pwd, args[0]);
 }
 
 void        ft_cd(t_comm *c, char ***env)
 {
-    //int     i;
-    //char    *pwd;
-
     if (!c->arg_nb)
         cd_no_arg(env);
-    else if (!ft_strcmp(c->args[0], '-'))
+    else if (!ft_strcmp(c->args[0], "-"))
         cd_exchange(env);
-
+	else
+		cd_path_finder(c, env);
 }
 
 void        ft_env(char ***env)

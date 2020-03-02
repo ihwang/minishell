@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 01:07:42 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 01:50:48 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,29 @@ void		cmd_del(t_cmd *cmd)
 	cmd->arg_nb ? ft_strlst_del(&cmd->args, cmd->arg_nb + 1) : 0;
 	free(cmd);
 }
+
+char        *get_env(char ***env, char *name, int keyval)
+{
+    int     i;
+	char	*ret;
+
+    i = -1;
+	while (env[0][++i])
+	{
+		if (keyval == VAL)
+		{
+			if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
+				return (ft_strstr_e(env[0][i], name));
+		}
+		else
+		{
+			if ((ret = ft_strstr(env[0][i], name)) && name[0] == env[0][i][0])
+					return (ret);
+		}
+	}
+    return (NULL);
+}
+
 
 char        *get_env(char ***env, char *name, int keyval)
 {

@@ -1,6 +1,0 @@
-#!bin/sh
-
-option=
-First=$1
-option=$First
-ls -l"$option"

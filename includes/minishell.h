@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/02/29 02:48:11 by tango            ###   ########.fr       */
+/*   Updated: 2020/03/02 02:53:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,16 @@ typedef struct      s_comm
     char            **args;
     int             arg_nb;
     struct s_comm   *next;
-}                   t_comm;
+}                   t_cmd;
 
+void				ft_env(char ***env);
+void				ft_pwd(char ***env);
+void				ft_echo(t_cmd *c, char ***env);
+void				ft_exit(t_cmd *comm, char ***env);
+void				tild_intp(char *str, char ***env);
+void				dollar_intp(char *str, char ***env);
+void				cmd_del(t_cmd *cmd);
+void				ft_cd(t_cmd *c, char ***env);
+char				*get_env(char ***env, char *name);
 void			    parse_line(char **line, char ***env);
 #endif

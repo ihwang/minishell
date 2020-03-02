@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/29 02:47:29 by tango            ###   ########.fr       */
+/*   Updated: 2020/03/01 20:17:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,16 @@ char		**set_env(char **sample)
 
 void		get_prompt(char **env)
 {
-	int		i;
 	char	*user;
 	char	*pwd;
 	char	*home;
 
-	i = -1;
-	while (env[++i])
-	{
-		if (ft_strstr(env[i], "USER="))
-			user = ft_strchr(env[i], '=') + 1;
-		else if (ft_strstr(env[i], "PWD="))
-			pwd = ft_strchr(env[i], '=') + 1;
-		else if (ft_strstr(env[i], "HOME="))
-			home = ft_strchr(env[i], '=') + 1;
-	}
-	if (ft_strstr(pwd, home))
+	user = get_env(&env, "USER=");
+	pwd = get_env(&env, "PWD=");
+	home = get_env(&env, "HOME=");
+	if (!ft_strcmp(pwd, home))
+		ft_putstr(pwd);
+	else if (ft_strstr(pwd, home))
 	{
 		ft_putstr("~");
 		ft_putstr(ft_strstr_e(pwd, home));
@@ -89,9 +83,9 @@ int			minishell(char **env)
 int			main(int ac, char **av, char **envp)
 {
 	char	**env;
-ac = 0;
-av = NULL;
 
+	ac = 0;
+	av = NULL;
 	env = set_env(envp);
 	return (minishell(env));
 }

@@ -6,17 +6,17 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/02/29 22:18:14 by tango            ###   ########.fr       */
+/*   Updated: 2020/03/02 03:01:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void        com_del(t_comm *c)
+void		cmd_del(t_cmd *cmd)
 {
-    ft_strdel(&c->comm);
-    c->arg_nb ? ft_strlst_del(&c->args, c->arg_nb + 1) : 0;
-    free(c);
+	ft_strdel(&cmd->comm);
+	cmd->arg_nb ? ft_strlst_del(&cmd->args, cmd->arg_nb + 1) : 0;
+	free(cmd);
 }
 
 char        *get_env(char ***env, char *name)
@@ -26,11 +26,11 @@ char        *get_env(char ***env, char *name)
     i = -1;
     while (env[0][++i])
         if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
-            return (env[0][i]);
+            return (ft_strstr_e(env[0][i], name));
     return (NULL);
 }
 
-void        clear_com(t_comm *c)
+void        clear_com(t_cmd *c)
 {
     c->arg_nb = 0;
 	c->comm = NULL;
@@ -38,7 +38,7 @@ void        clear_com(t_comm *c)
     c->next = NULL;
 }
 
-void        get_cmd_arg(char *cmd, t_comm *coms)
+void        get_cmd_arg(char *cmd, t_cmd *coms)
 {
     char    **split;
     int     i;
@@ -67,24 +67,24 @@ void        get_cmd_arg(char *cmd, t_comm *coms)
     ft_strlst_del(&split, coms->arg_nb + 2);
 }
 
-t_comm		*get_coms(char **line)
+t_cmd		*get_coms(char **line)
 {
     char    **cmd_lst;
     int     i;
-    t_comm  *coms;
-    t_comm  *c_t;
-    t_comm  *c_p;
+    t_cmd  *coms;
+    t_cmd  *c_t;
+    t_cmd  *c_p;
 
     cmd_lst = ft_strsplit(*line, ';');
     ft_strdel(line);
-    coms = (t_comm*)malloc(sizeof(t_comm));
+    coms = (t_cmd*)malloc(sizeof(t_cmd));
 	clear_com(coms);
     c_p = coms;
     get_cmd_arg(cmd_lst[0], c_p);
     i = 0;
     while (cmd_lst[++i])
     {
-        c_t = (t_comm*)malloc(sizeof(t_comm));
+        c_t = (t_cmd*)malloc(sizeof(t_cmd));
 		clear_com(c_t);
         get_cmd_arg(cmd_lst[i], c_t);
         c_p->next = c_t;
@@ -92,25 +92,6 @@ t_comm		*get_coms(char **line)
     }
     ft_strlst_del(&cmd_lst, i + 1);
     return (coms);
-}
-
-void        ft_exit(t_comm *coms, char ***env)
-{
-    t_comm  *c_p;
-    int     i;
-
-    while (coms)
-    {
-        c_p = coms;
-        coms = coms->next;
-        com_del(c_p);
-    }
-    i = -1;
-    while (env[0][++i])
-        ft_strdel(&env[0][i]);
-    ft_strdel(&env[0][i]);
-    free(env[0]);
-    exit(0);
 }
 
 int         is_builtin(char *comm)
@@ -123,123 +104,19 @@ int         is_builtin(char *comm)
     return (0);
 }
 
-void        ft_pwd(char ***env)
+void        run_builtin(t_cmd *coms, char ***env)
 {
-    char    *pwd;
-
-    pwd = get_env(env, "PWD=");
-    pwd = ft_strstr_e(pwd, "PWD=");
-    ft_putstr(pwd);
-    ft_putstr("\n");
-}
-
-
-
-void        cd_no_arg(char ***env)
-{
-    char    *pwd;
-    char    *home;
-    char    *old;
-
-    pwd = get_env(env, "PWD=");
-    pwd = ft_strstr_e(pwd, "PWD=");
-    home = get_env(env, "HOME=");
-    home = ft_strstr_e(home, "HOME=");
-    old = get_env(env, "OLDPWD=");
-    old = ft_strstr_e(old, "OLDPWD=");
-    ft_bzero(old, PATH_MAX - 7);
-    ft_strcat(old, pwd);
-    ft_bzero(pwd, PATH_MAX - 4);
-    ft_strcat(pwd, home);
-}
-
-void        cd_exchange(char ***env)
-{
-    char    *pwd;
-    char    *old;
-    char    *temp;
-
-    temp = (char*)malloc(PATH_MAX);
-    ft_bzero(temp, PATH_MAX);
-    pwd = get_env(env, "PWD=");
-    pwd = ft_strstr_e(pwd, "PWD=");
-	ft_strcat(temp, pwd);
-    old = get_env(env, "OLDPWD=");
-    old = ft_strstr_e(old, "OLDPWD=");
-    ft_bzero(pwd, PATH_MAX - 4);
-    ft_strcat(pwd, old);
-    ft_bzero(old, PATH_MAX - 7);
-	ft_strcat(old, temp);
-	ft_strdel(&temp);
-}
-
-void		tild_dol_intp(char *str, char ***env)
-{
-	char	*home;
-
-	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
-	{
-		home = get_env(env, "HOME=");
-		home = ft_strstr_e(home, "HOME=");
-		
-
-
-}
-
-void		cd_path_finder(t_comm *c, char ***env)
-{
-	char	*old;
-	char	*pwd;
-
-	old = get_env(env, "OLDPWD=");
-	old = ft_strstr_e(old, "OLDPWD=");
-	ft_bzero(old, PATH_MAX - 7);
-	pwd = get_env(env, "PWD=");
-	pwd = ft_strstr_e(pwd, "PWD=");
-	ft_strcat(old, pwd);
-	tild_dol_intp(c->args[0], env);
-	bzero(pwd, PATH_MAX - 4);
-	ft_strcat(pwd, args[0]);
-}
-
-void        ft_cd(t_comm *c, char ***env)
-{
-    if (!c->arg_nb)
-        cd_no_arg(env);
-    else if (!ft_strcmp(c->args[0], "-"))
-        cd_exchange(env);
-	else
-		cd_path_finder(c, env);
-}
-
-void        ft_env(char ***env)
-{
-    int     i;
-
-    i = -1;
-    while (env[0][++i])
-    {
-        ft_putstr(env[0][i]);
-        ft_putstr("\n");
-    }
-}
-
-void        run_builtin(t_comm *coms, char ***env)
-{
-    !ft_strcmp(coms->comm, "exit") ? ft_exit(coms, env) : 0;
-    !ft_strcmp(coms->comm, "pwd") ? ft_pwd(env) : 0;
-    !ft_strcmp(coms->comm, "cd") ? ft_cd(coms, env) : 0;
-    !ft_strcmp(coms->comm, "env") ? ft_env(env) : 0;
-        //ft_exit(coms);
-   // if (!ft_strcmp(coms->comm, "pwd"))
-     //   ft_pwd();
-  /*  else if (!ft_strcmp(coms[i].comm, "echo"))
-        ft_echo(();
-    else if (!ft_strcmp(coms[i].comm, "cd"))
-        ft_cd();
-    else if (!ft_strcmp(coms[i].comm, "env"))
-        ft_env();
-    else if (!ft_strcmp(coms[i].comm, "setenv"))
+    if (!ft_strcmp(coms->comm, "exit"))
+		ft_exit(coms, env);
+    if (!ft_strcmp(coms->comm, "pwd"))
+		ft_pwd(env);
+    if (!ft_strcmp(coms->comm, "cd"))
+		ft_cd(coms, env);
+    if (!ft_strcmp(coms->comm, "env"))
+		ft_env(env);
+	if (!ft_strcmp(coms->comm, "echo"))
+		ft_echo(coms, env);
+    /*else if (!ft_strcmp(coms[i].comm, "setenv"))
         ft_setenv();
     else if (!ft_strcmp(coms[i].comm, "unsetenv"))
         ft_unsetenv();
@@ -248,8 +125,8 @@ void        run_builtin(t_comm *coms, char ***env)
 
 void		parse_line(char **line, char ***env)
 {
-    t_comm  *coms;
-    t_comm  *c_p;
+    t_cmd  *coms;
+    t_cmd  *c_p;
     int     i;
 
     if (line[0][0] == '\0')
@@ -269,7 +146,7 @@ void		parse_line(char **line, char ***env)
             //message handling        
         }*/
         c_p = coms;
-        com_del(c_p);
+		cmd_del(c_p);
         coms = coms->next;
     }
 }

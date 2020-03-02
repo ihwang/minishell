@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/01 20:17:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 01:07:05 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void		get_prompt(char **env)
 	char	*pwd;
 	char	*home;
 
-	user = get_env(&env, "USER=");
-	pwd = get_env(&env, "PWD=");
-	home = get_env(&env, "HOME=");
+	user = get_env(&env, "USER=", VAL);
+	pwd = get_env(&env, "PWD=", VAL);
+	home = get_env(&env, "HOME=", VAL);
 	if (!ft_strcmp(pwd, home))
 		ft_putstr(pwd);
 	else if (ft_strstr(pwd, home))

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:25:45 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/02 16:09:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 01:06:18 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		tild_intp(char *str, char ***env)
 
 	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
 	{
-		home = get_env(env, "HOME=");
+		home = get_env(env, "HOME=", VAL);
 		ft_bzero(temp, PATH_MAX);
 		ft_strcat(temp, &str[1]);
 		ft_strcpy(str, home);
@@ -46,10 +46,10 @@ void		dollar_intp(char *str, char ***env)
 			ft_strncpy(target, &str[i + 1], j - i - 1);
 			ft_strcpy(copy, &str[j]);
 			str[i] = '\0';
-			if (get_env(env, ft_strcat(target, "=")))
+			if (get_env(env, ft_strcat(target, "=", VAL)))
 			{
 				str[i] = '\0';
-				ft_strcat(str, get_env(env, target));
+				ft_strcat(str, get_env(env, target, VAL));
 				ft_strcat(str, copy);
 			}
 		}

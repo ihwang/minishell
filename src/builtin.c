@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/02 18:38:35 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 01:07:42 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,24 @@ void		cmd_del(t_cmd *cmd)
 	free(cmd);
 }
 
-char        *get_env(char ***env, char *name)
+char        *get_env(char ***env, char *name, int keyval)
 {
     int     i;
+	char	*ret;
 
     i = -1;
-    while (env[0][++i])
-        if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
-            return (ft_strstr_e(env[0][i], name));
+	if (keyval == VAL)
+	{
+		while (env[0][++i])
+			if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
+				return (ft_strstr_e(env[0][i], name));
+	}
+	else
+	{
+		while (env[0][++i])
+			if ((ret = ft_strstr(env[0][i], name)) && name[0] == env[0][i][0])
+				return (ret);
+	}
     return (NULL);
 }
 
@@ -38,19 +48,10 @@ void        clear_com(t_cmd *c)
     c->next = NULL;
 }
 
-void        get_cmd_arg(char *cmd, t_cmd *coms)
+void		get_cmd_arg2(t_cmd *coms, char **split)
 {
-    char    **split;
-    int     i;
+	int		i;
 
-    i = -1;
-    split = ft_strsplit(cmd, ' ');
-    while (split[++i])
-        NULL;
-    coms->comm = (char*)malloc(PATH_MAX);
-    ft_bzero(coms->comm, PATH_MAX);
-    ft_strcpy(coms->comm, split[0]);
-    coms->arg_nb = i - 1;
 	if (coms->arg_nb)
 	{
 		coms->args = (char**)malloc(sizeof(char*) * (coms->arg_nb + 1));
@@ -63,6 +64,36 @@ void        get_cmd_arg(char *cmd, t_cmd *coms)
 		}
 		coms->args[i] = NULL;
 	}
+}
+
+void        get_cmd_arg1(char *cmd, t_cmd *coms)
+{
+    char    **split;
+    int     i;
+
+    i = -1;
+    split = ft_strsplit(cmd, ' ');
+//	if (!split[0])
+//		return (ft_strlst_del(&split, 1));
+    while (split[++i])
+        NULL;
+    coms->comm = (char*)malloc(PATH_MAX);
+    ft_bzero(coms->comm, PATH_MAX);
+    ft_strcpy(coms->comm, split[0]);
+    coms->arg_nb = i - 1;
+	get_cmd_arg2(coms, split);
+/*	if (coms->arg_nb)
+	{
+		coms->args = (char**)malloc(sizeof(char*) * (coms->arg_nb + 1));
+		i = -1;
+		while (split[++i + 1])
+		{
+			coms->args[i] = (char*)malloc(sizeof(char) * PATH_MAX);
+			ft_bzero(coms->args[i], PATH_MAX);
+			ft_strcat(coms->args[i], split[i + 1]);
+		}
+		coms->args[i] = NULL;
+	}*/
     coms->next = NULL;
     ft_strlst_del(&split, coms->arg_nb + 2);
 }
@@ -80,13 +111,13 @@ t_cmd		*get_coms(char **line)
     coms = (t_cmd*)malloc(sizeof(t_cmd));
 	clear_com(coms);
     c_p = coms;
-    get_cmd_arg(cmd_lst[0], c_p);
+    get_cmd_arg1(cmd_lst[0], c_p);
     i = 0;
     while (cmd_lst[++i])
     {
         c_t = (t_cmd*)malloc(sizeof(t_cmd));
 		clear_com(c_t);
-        get_cmd_arg(cmd_lst[i], c_t);
+        get_cmd_arg1(cmd_lst[i], c_t);
         c_p->next = c_t;
         c_p = c_p->next;
     }
@@ -129,10 +160,13 @@ void		parse_line(char **line, char ***env)
     t_cmd  *coms;
     t_cmd  *c_p;
     int     i;
+	char	*trim;
 
-    if (line[0][0] == '\0')
-        return (ft_strdel(line));
-    coms = get_coms(line);
+	trim = ft_strtrim(*line);
+	ft_strdel(line);
+    if (trim[0] == '\0')
+        return (ft_strdel(&trim));
+    coms = get_coms(&trim);
     i = -1;
     while (coms)
     {

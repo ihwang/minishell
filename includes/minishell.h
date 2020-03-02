@@ -6,12 +6,14 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/02 19:07:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 01:00:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+# define KEY 1
+# define VAL 0
 
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -38,6 +40,6 @@ void				tild_intp(char *str, char ***env);
 void				dollar_intp(char *str, char ***env);
 void				cmd_del(t_cmd *cmd);
 void				ft_cd(t_cmd *c, char ***env);
-char				*get_env(char ***env, char *name);
+char				*get_env(char ***env, char *name, int keyval);
 void			    parse_line(char **line, char ***env);
 #endif

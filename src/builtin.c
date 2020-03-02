@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/02 03:01:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/02 18:38:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,17 @@ void        run_builtin(t_cmd *coms, char ***env)
 {
     if (!ft_strcmp(coms->comm, "exit"))
 		ft_exit(coms, env);
-    if (!ft_strcmp(coms->comm, "pwd"))
+	else if (!ft_strcmp(coms->comm, "pwd"))
 		ft_pwd(env);
-    if (!ft_strcmp(coms->comm, "cd"))
+	else if (!ft_strcmp(coms->comm, "cd"))
 		ft_cd(coms, env);
-    if (!ft_strcmp(coms->comm, "env"))
+	else if (!ft_strcmp(coms->comm, "env"))
 		ft_env(env);
-	if (!ft_strcmp(coms->comm, "echo"))
+	else if (!ft_strcmp(coms->comm, "echo"))
 		ft_echo(coms, env);
-    /*else if (!ft_strcmp(coms[i].comm, "setenv"))
-        ft_setenv();
+    else if (!ft_strcmp(coms->comm, "setenv"))
+        ft_setenv(coms, env);
+	/*
     else if (!ft_strcmp(coms[i].comm, "unsetenv"))
         ft_unsetenv();
     */

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:33:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/02 03:01:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/02 19:30:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void        ft_exit(t_cmd *coms, char ***env)
         ft_strdel(&env[0][i]);
     ft_strdel(&env[0][i]);
     free(env[0]);
+	while (1)
+		NULL;
     exit(0);
 }
 
@@ -62,7 +64,68 @@ void		ft_echo(t_cmd *c, char ***env)
 		tild_intp(c->args[i], env);
 		dollar_intp(c->args[i], env);
 		ft_putstr(c->args[i]);
-		i + 1 != c->arg_nb ? ft_putstr(" ") : 0;
+		if (i + 1 != c->arg_nb && ft_strcmp(c->args[i], ""))
+			ft_putstr(" ");
 	}
 	ft_putchar('\n');
+}
+
+void		add_env(char *str, char ***env)
+{
+	int		i;
+	char	**temp;
+
+	i = -1;
+	while (env[0][++i])
+		NULL;
+	temp = (char**)malloc(sizeof(char*) * (i + 2));
+	i = -1;
+	while (env[0][++i])
+	{
+		temp[i] = (char*)malloc(sizeof(char) * PATH_MAX);
+		ft_strcpy(temp[i], env[0][i]);
+	}
+	temp[i] = (char*)malloc(sizeof(char) * PATH_MAX);
+	ft_strcpy(temp[i], str);
+	temp[i + 1] = NULL;
+	ft_strlst_del(env, i);
+	env[0] = temp;
+	//////HERE
+	//and
+	//NEED TO FINISH SETENV
+}
+
+void		ft_setenv(t_cmd *c, char ***env)
+{
+	int		i;
+	int		j;
+	char	**split;
+	char	*var;
+
+	i = -1;
+	while (++i < c->arg_nb)
+	{
+		tild_intp(c->args[i], env);
+		dollar_intp(c->args[i], env);
+		j = -1;
+		while (ft_isalnum(c->args[i][++j]))
+			NULL;
+		if (c->args[i][j] =='\0')
+			return ;
+		else if (c->args[i][j] != '=' || j == 0)
+			return (ft_putstr("errro"));
+		split = ft_strsplit(c->args[i], '=');
+		if ((var = get_env(env, split[0])))
+		{
+			var++;
+			j = 0;
+			var[0] = '\0';
+			while(split[++j])
+				ft_strcat(var, split[j]);
+		}
+		else
+		{
+			add_env(c->args[i], env);
+		}
+	}
 }

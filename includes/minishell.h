@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/02 02:53:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/02 19:07:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 #include <stdio.h>
 #include "../libft/includes/libft.h"
 
-
 typedef struct      s_comm
 {
     char            *comm;
@@ -30,6 +29,7 @@ typedef struct      s_comm
     struct s_comm   *next;
 }                   t_cmd;
 
+void				ft_setenv(t_cmd *c, char ***env);
 void				ft_env(char ***env);
 void				ft_pwd(char ***env);
 void				ft_echo(t_cmd *c, char ***env);

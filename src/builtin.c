@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 01:50:48 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:06:59 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char        *get_env(char ***env, char *name, int keyval)
 }
 
 
-char        *get_env(char ***env, char *name, int keyval)
+/*char        *get_env(char ***env, char *name, int keyval)
 {
     int     i;
 	char	*ret;
@@ -62,6 +62,7 @@ char        *get_env(char ***env, char *name, int keyval)
 	}
     return (NULL);
 }
+*/
 
 void        clear_com(t_cmd *c)
 {
@@ -172,10 +173,8 @@ void        run_builtin(t_cmd *coms, char ***env)
 		ft_echo(coms, env);
     else if (!ft_strcmp(coms->comm, "setenv"))
         ft_setenv(coms, env);
-	/*
-    else if (!ft_strcmp(coms[i].comm, "unsetenv"))
-        ft_unsetenv();
-    */
+    else if (!ft_strcmp(coms->comm, "unsetenv"))
+        ft_unsetenv(coms, env);
 }
 
 void		parse_line(char **line, char ***env)

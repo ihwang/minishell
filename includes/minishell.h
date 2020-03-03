@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 01:00:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:42:57 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct      s_comm
     struct s_comm   *next;
 }                   t_cmd;
 
+void				ft_unsetenv(t_cmd *c, char ***env);
 void				ft_setenv(t_cmd *c, char ***env);
 void				ft_env(char ***env);
 void				ft_pwd(char ***env);

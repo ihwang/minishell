@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:25:45 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/03 01:06:18 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 17:54:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		dollar_intp(char *str, char ***env)
 			ft_strncpy(target, &str[i + 1], j - i - 1);
 			ft_strcpy(copy, &str[j]);
 			str[i] = '\0';
-			if (get_env(env, ft_strcat(target, "=", VAL)))
+			if (get_env(env, ft_strcat(target, "="), VAL))
 			{
 				str[i] = '\0';
 				ft_strcat(str, get_env(env, target, VAL));

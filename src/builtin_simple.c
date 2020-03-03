@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:33:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/03 01:43:49 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:43:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void        ft_exit(t_cmd *coms, char ***env)
         ft_strdel(&env[0][i]);
     ft_strdel(&env[0][i]);
     free(env[0]);
-//	while (1)
-//		NULL;
+	while (1)
+		NULL;
     exit(0);
 }
 
@@ -69,31 +69,3 @@ void		ft_echo(t_cmd *c, char ***env)
 	}
 	ft_putchar('\n');
 }
-
-void		ft_unsetenv(t_cmd *c, char ***env)
-{
-	int		i;
-	int		j;
-	int		nb;
-	char	*var;
-
-	i = -1;
-	while (++i < c->arg_nb)
-	{
-		j = -1;
-		while (ft_isalnum(c->args[i][++j]))
-			NULL;
-		if (c->args[i][j] != '\0')
-			return (ft_putstr("error\n"));
-		ft_strcat(c->args[i], "=");
-		j = -1;
-		while (
-//////////////////////////////////////////////
-				//here
-// modified get_env and added MACROS for ft_unsetenv
-// These need to be tested.
-
-		nb = -1;
-		while (env[0][++nb])
-			NULL;
-

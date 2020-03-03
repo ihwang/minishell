@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:33:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/03 18:43:45 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 18:49:56 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void        ft_exit(t_cmd *coms, char ***env)
         ft_strdel(&env[0][i]);
     ft_strdel(&env[0][i]);
     free(env[0]);
-	while (1)
-		NULL;
     exit(0);
 }
 

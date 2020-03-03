@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 18:06:59 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/03 19:59:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,16 +188,17 @@ void		parse_line(char **line, char ***env)
 	ft_strdel(line);
     if (trim[0] == '\0')
         return (ft_strdel(&trim));
-    coms = get_coms(&trim);
-    i = -1;
-    while (coms)
-    {
-        if (is_builtin(coms->comm))
-            run_builtin(coms, env);
-       /* else if (is_in_PATH)
+	coms = get_coms(&trim);
+	i = -1;
+	while (coms)
+	{
+		if (is_builtin(coms->comm))
+			run_builtin(coms, env);
+		else if (is_in_path(coms, env))
         {
-            //forking and execve
+			ft_putstr("There is!\n");
         }
+		/*
         else
         {
             //message handling        

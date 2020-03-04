@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/03 20:01:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/04 16:30:31 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int				is_in_path_sub(char *str, t_cmd *c)
+t_dirent		*is_in_path_sub(char *str, t_cmd *c)
 {
 	DIR			*dirp;
 	t_dirent	*dir;
@@ -20,32 +20,38 @@ int				is_in_path_sub(char *str, t_cmd *c)
 	if ((dirp = opendir(str)))
 	{
 		while ((dir = readdir(dirp)))
+		{
 			if (!ft_strcmp(dir->d_name, c->comm))
-				return (1);
+			{
+				closedir(dirp);
+				return (dir);
+			}
+		}
 		closedir(dirp);
 	}
-	return (0);
+	return (NULL);
 }
 
-int				is_in_path(t_cmd *c, char ***env)
+t_dirent		*is_in_path(t_cmd *c)
 {
 	int			i;
 	int			nb;
 	char		**split;
+	t_dirent	*dir;
 
-	split = ft_strsplit(get_env(env, "PATH=", VAL), ':');
+	split = ft_strsplit(get_env("PATH=", VAL), ':');
 	nb = -1;
 	while (split[++nb])
 		NULL;
 	i = -1;
 	while (++i < nb)
 	{
-		if (is_in_path_sub(split[i], c))
+		if ((dir = is_in_path_sub(split[i], c)))
 		{
 			ft_strlst_del(&split, nb + 1);
-			return (1);
+			return (dir);
 		}
 	}
 	ft_strlst_del(&split, nb + 1);
-	return (0);
+	return (NULL);
 }

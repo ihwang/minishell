@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 19:59:47 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/04 16:29:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,50 +19,27 @@ void		cmd_del(t_cmd *cmd)
 	free(cmd);
 }
 
-char        *get_env(char ***env, char *name, int keyval)
+char        *get_env(char *name, int keyval)
 {
     int     i;
 	char	*ret;
 
     i = -1;
-	while (env[0][++i])
+	while (g_env[++i])
 	{
 		if (keyval == VAL)
 		{
-			if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
-				return (ft_strstr_e(env[0][i], name));
+			if (ft_strstr(g_env[i], name) && name[0] == g_env[i][0])
+				return (ft_strstr_e(g_env[i], name));
 		}
 		else
 		{
-			if ((ret = ft_strstr(env[0][i], name)) && name[0] == env[0][i][0])
+			if ((ret = ft_strstr(g_env[i], name)) && name[0] == g_env[i][0])
 					return (ret);
 		}
 	}
     return (NULL);
 }
-
-
-/*char        *get_env(char ***env, char *name, int keyval)
-{
-    int     i;
-	char	*ret;
-
-    i = -1;
-	if (keyval == VAL)
-	{
-		while (env[0][++i])
-			if (ft_strstr(env[0][i], name) && name[0] == env[0][i][0])
-				return (ft_strstr_e(env[0][i], name));
-	}
-	else
-	{
-		while (env[0][++i])
-			if ((ret = ft_strstr(env[0][i], name)) && name[0] == env[0][i][0])
-				return (ret);
-	}
-    return (NULL);
-}
-*/
 
 void        clear_com(t_cmd *c)
 {
@@ -97,8 +74,6 @@ void        get_cmd_arg1(char *cmd, t_cmd *coms)
 
     i = -1;
     split = ft_strsplit(cmd, ' ');
-//	if (!split[0])
-//		return (ft_strlst_del(&split, 1));
     while (split[++i])
         NULL;
     coms->comm = (char*)malloc(PATH_MAX);
@@ -106,18 +81,6 @@ void        get_cmd_arg1(char *cmd, t_cmd *coms)
     ft_strcpy(coms->comm, split[0]);
     coms->arg_nb = i - 1;
 	get_cmd_arg2(coms, split);
-/*	if (coms->arg_nb)
-	{
-		coms->args = (char**)malloc(sizeof(char*) * (coms->arg_nb + 1));
-		i = -1;
-		while (split[++i + 1])
-		{
-			coms->args[i] = (char*)malloc(sizeof(char) * PATH_MAX);
-			ft_bzero(coms->args[i], PATH_MAX);
-			ft_strcat(coms->args[i], split[i + 1]);
-		}
-		coms->args[i] = NULL;
-	}*/
     coms->next = NULL;
     ft_strlst_del(&split, coms->arg_nb + 2);
 }
@@ -159,50 +122,46 @@ int         is_builtin(char *comm)
     return (0);
 }
 
-void        run_builtin(t_cmd *coms, char ***env)
+void        run_builtin(t_cmd *coms)
 {
     if (!ft_strcmp(coms->comm, "exit"))
-		ft_exit(coms, env);
+		ft_exit(coms);
 	else if (!ft_strcmp(coms->comm, "pwd"))
-		ft_pwd(env);
+		ft_pwd();
 	else if (!ft_strcmp(coms->comm, "cd"))
-		ft_cd(coms, env);
+		ft_cd(coms);
 	else if (!ft_strcmp(coms->comm, "env"))
-		ft_env(env);
+		ft_env();
 	else if (!ft_strcmp(coms->comm, "echo"))
-		ft_echo(coms, env);
+		ft_echo(coms);
     else if (!ft_strcmp(coms->comm, "setenv"))
-        ft_setenv(coms, env);
+        ft_setenv(coms);
     else if (!ft_strcmp(coms->comm, "unsetenv"))
-        ft_unsetenv(coms, env);
+        ft_unsetenv(coms);
 }
 
-void		parse_line(char **line, char ***env)
+void			parse_line(char **line)
 {
-    t_cmd  *coms;
-    t_cmd  *c_p;
-    int     i;
-	char	*trim;
+	t_cmd		*coms;
+	t_cmd		*c_p;
+//	t_dirent	*dir;
+	char		*trim;
 
 	trim = ft_strtrim(*line);
 	ft_strdel(line);
     if (trim[0] == '\0')
         return (ft_strdel(&trim));
 	coms = get_coms(&trim);
-	i = -1;
 	while (coms)
 	{
 		if (is_builtin(coms->comm))
-			run_builtin(coms, env);
-		else if (is_in_path(coms, env))
-        {
-			ft_putstr("There is!\n");
-        }
-		/*
-        else
-        {
+			run_builtin(coms);
+	//	else if ((dir = is_in_path(coms, env)))
+	//		make_child(coms, env, dir);
+	//	else if (/*The path exist*/)
+	//		make_child(coms, env, NULL);
+        //else
             //message handling        
-        }*/
         c_p = coms;
 		cmd_del(c_p);
         coms = coms->next;

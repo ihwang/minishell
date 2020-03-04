@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/03 20:00:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/04 17:28:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define MINISHELL_H
 # define KEY 1
 # define VAL 0
+# define PARENT 1
+# define CHILD 0
 
 #include <sys/wait.h>
 #include <sys/stat.h>
@@ -22,6 +24,8 @@
 #include <limits.h>
 #include <stdio.h>
 #include "../libft/includes/libft.h"
+
+char					**g_env;
 
 typedef struct dirent	t_dirent;
 
@@ -33,17 +37,19 @@ typedef struct			s_comm
     struct s_comm   	*next;
 }                   	t_cmd;
 
-int						is_in_path(t_cmd *c, char ***env);
-void					ft_unsetenv(t_cmd *c, char ***env);
-void					ft_setenv(t_cmd *c, char ***env);
-void					ft_env(char ***env);
-void					ft_pwd(char ***env);
-void					ft_echo(t_cmd *c, char ***env);
-void					ft_exit(t_cmd *comm, char ***env);
-void					tild_intp(char *str, char ***env);
-void					dollar_intp(char *str, char ***env);
+int						is_eof(char *line);
+void					sig_controller(int option);
+t_dirent				*is_in_path(t_cmd *c);
+void					ft_unsetenv(t_cmd *c);
+void					ft_setenv(t_cmd *c);
+void					ft_env(void);
+void					ft_pwd(void);
+void					ft_echo(t_cmd *c);
+void					ft_exit(t_cmd *comm);
+void					tild_intp(char *str);
+void					dollar_intp(char *str);
 void					cmd_del(t_cmd *cmd);
-void					ft_cd(t_cmd *c, char ***env);
-char					*get_env(char ***env, char *name, int keyval);
-void					parse_line(char **line, char ***env);
+void					ft_cd(t_cmd *c);
+char					*get_env(char *name, int keyval);
+void					parse_line(char **line);
 #endif

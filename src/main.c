@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/03 01:07:05 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/04 17:28:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,15 @@ char		**set_env(char **sample)
 }
 
 
-void		get_prompt(char **env)
+void		get_prompt(void)
 {
 	char	*user;
 	char	*pwd;
 	char	*home;
 
-	user = get_env(&env, "USER=", VAL);
-	pwd = get_env(&env, "PWD=", VAL);
-	home = get_env(&env, "HOME=", VAL);
+	user = get_env("USER=", VAL);
+	pwd = get_env("PWD=", VAL);
+	home = get_env("HOME=", VAL);
 	if (!ft_strcmp(pwd, home))
 		ft_putstr(pwd);
 	else if (ft_strstr(pwd, home))
@@ -55,37 +55,25 @@ void		get_prompt(char **env)
 	ft_putstr("$ ");
 }	
 
-void			signal_handler(int sig)
-{
-	int			a;
-	extern char	**environ;
-
-	a = sig;
-	putchar('\n');
-	get_prompt(environ);
-	signal(SIGINT, signal_handler);
-}
-
-int			minishell(char **env)
+int			minishell()
 {
 	char	*line;
 
+	line = NULL;
 	while (1)
 	{
-		signal(SIGINT, signal_handler);
-		get_prompt(env);
+		sig_controller(PARENT);
+		get_prompt();
 		get_next_line(0, &line);
-		parse_line(&line, &env);
+		is_eof(line) ? parse_line(&line) : ft_exit(NULL);
 	}
 	return (0);
 }
 
 int			main(int ac, char **av, char **envp)
 {
-	char	**env;
-
 	ac = 0;
 	av = NULL;
-	env = set_env(envp);
-	return (minishell(env));
+	g_env = set_env(envp);
+	return (minishell());
 }

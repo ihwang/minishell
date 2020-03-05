@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 02:17:53 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:28:10 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				is_in_path_sub(char *str, t_cmd *c)
 	{
 		while ((dir = readdir(dirp)))
 		{
-			if (!ft_strcmp(dir->d_name, c->comm))
+			if (!ft_strcmp(dir->d_name, c->av[0]))
 			{
 				closedir(dirp);
 				return (1);

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:33:55 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 17:13:50 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:38:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ void		ft_echo(t_cmd *c)
 {
 	int		i;
 
-	i = -1;
-	while (++i < c->arg_nb)
+	i = 0;
+	while (++i < c->ac)
 	{
-		tild_intp(c->args[i]);
-		dollar_intp(c->args[i]);
-		ft_putstr(c->args[i]);
-		if (i + 1 != c->arg_nb && ft_strcmp(c->args[i], ""))
+		tild_intp(c->av[i]);
+		dollar_intp(c->av[i]);
+		ft_putstr(c->av[i]);
+		if (i + 1 != c->ac && ft_strcmp(c->av[i], ""))
 			ft_putstr(" ");
 	}
 	ft_putchar('\n');

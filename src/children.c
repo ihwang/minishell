@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 02:45:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:28:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ void		make_child(t_cmd *c, char *path)
 	{
 		sig_controller(CHILD);
 		ft_strcat(path, "/");
-		ft_strcat(path, c->comm);
+		ft_strcat(path, c->av[0]);
 		if (access(path, X_OK))
 		{
 			ft_putstr(path);
 			ft_putstr(": command not found\n");
 			return (ft_strdel(&path));
 		}
-		execve(path, c->args, g_env);
+		execve(path, c->av, g_env);
 		//Need to change struct of args
 		//to args[0] == c->comm, args[1] == follwing
 	}

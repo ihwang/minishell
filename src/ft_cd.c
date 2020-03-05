@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 16:22:17 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:39:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,23 +45,23 @@ void		cd_path_finder(t_cmd *c)
 	char	*old;
 	char	*pwd;
 
-	tild_intp(c->args[0]);
-	dollar_intp(c->args[0]);
-	if (!(dirp = opendir(c->args[0])))
+	tild_intp(c->av[0]);
+	dollar_intp(c->av[0]);
+	if (!(dirp = opendir(c->av[0])))
 		return ; //error handling
 	closedir(dirp);
 	old = get_env("OLDPWD=", VAL);
 	ft_bzero(old, PATH_MAX - 7);
 	pwd = get_env("PWD=", VAL);
 	ft_strcat(old, pwd);
-	if (c->args[0][0] == '/')
+	if (c->av[1][0] == '/')
 	{
 		ft_bzero(pwd, PATH_MAX - 4);
-		ft_strcat(pwd, c->args[0]);
+		ft_strcat(pwd, c->av[1]);
 		chdir(pwd);
 	}
 	else
-		cd_shaping_env(c->args[0]);
+		cd_shaping_env(c->av[1]);
 }
 
 void        cd_no_arg(void)
@@ -101,9 +101,9 @@ void        cd_exchange(void)
 
 void        ft_cd(t_cmd *c)
 {
-    if (!c->arg_nb)
+    if (c->ac == 1)
         cd_no_arg();
-    else if (!ft_strcmp(c->args[0], "-"))
+    else if (!ft_strcmp(c->av[1], "-"))
         cd_exchange();
 	else
 		cd_path_finder(c);

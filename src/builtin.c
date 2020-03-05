@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/05 02:18:04 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:44:39 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void		cmd_del(t_cmd *cmd)
 {
-	ft_strdel(&cmd->comm);
-	cmd->arg_nb ? ft_strlst_del(&cmd->args, cmd->arg_nb + 1) : 0;
+	ft_strlst_del(&cmd->av, cmd->ac + 1);
 	free(cmd);
 }
 
@@ -41,14 +40,21 @@ char        *get_env(char *name, int keyval)
     return (NULL);
 }
 
-void        clear_com(t_cmd *c)
+/*void        clear_com(t_cmd *c)
 {
     c->arg_nb = 0;
 	c->comm = NULL;
 	c->args = NULL;
     c->next = NULL;
-}
+}*/
 
+void		clear_cmd(t_cmd *c)
+{
+	c->ac = 0;
+	c->av = NULL;
+	c->next = NULL;
+}
+/*
 void		get_cmd_arg2(t_cmd *coms, char **split)
 {
 	int		i;
@@ -65,8 +71,9 @@ void		get_cmd_arg2(t_cmd *coms, char **split)
 		}
 		coms->args[i] = NULL;
 	}
-}
+}*/
 
+/*
 void        get_cmd_arg1(char *cmd, t_cmd *coms)
 {
     char    **split;
@@ -77,14 +84,64 @@ void        get_cmd_arg1(char *cmd, t_cmd *coms)
     while (split[++i])
         NULL;
     coms->comm = (char*)malloc(PATH_MAX);
-    ft_bzero(coms->comm, PATH_MAX);
     ft_strcpy(coms->comm, split[0]);
     coms->arg_nb = i - 1;
 	get_cmd_arg2(coms, split);
     coms->next = NULL;
     ft_strlst_del(&split, coms->arg_nb + 2);
 }
+*/
 
+void		get_cmd_arg(char *cmd, t_cmd *c)
+{
+	char	**split;
+	int		i;
+
+	i = -1;
+	split = ft_strsplit(cmd, ' ');
+	while (split[++i])
+		NULL;
+	c->ac = i;
+	c->av = (char**)malloc(sizeof(char*) * (i + 1));
+	i = -1;
+	while (++i < c->ac)
+	{
+		c->av[i] = (char*)malloc(PATH_MAX);
+		ft_strcpy(c->av[i], split[i]);
+	}
+	c->av[i] = NULL;
+	c->next = NULL;
+	ft_strlst_del(&split, i + 1);
+}
+
+t_cmd		*get_coms(char **line)
+{
+    char    **cmd_lst;
+    int     i;
+    t_cmd  *coms;
+    t_cmd  *c_t;
+    t_cmd  *c_p;
+
+    cmd_lst = ft_strsplit(*line, ';');
+    ft_strdel(line);
+	coms = (t_cmd*)malloc(sizeof(t_cmd));
+	get_cmd_arg(cmd_lst[0], coms);
+//	clear_com(coms);
+	c_p = coms;
+	i = 0;
+    while (cmd_lst[++i])
+    {
+        c_t = (t_cmd*)malloc(sizeof(t_cmd));
+//		clear_com(c_t);
+        get_cmd_arg(cmd_lst[i], c_t);
+        c_p->next = c_t;
+        c_p = c_p->next;
+    }
+    ft_strlst_del(&cmd_lst, i + 1);
+    return (coms);
+}
+
+/*
 t_cmd		*get_coms(char **line)
 {
     char    **cmd_lst;
@@ -111,6 +168,7 @@ t_cmd		*get_coms(char **line)
     ft_strlst_del(&cmd_lst, i + 1);
     return (coms);
 }
+*/
 
 int         is_builtin(char *comm)
 {
@@ -124,19 +182,19 @@ int         is_builtin(char *comm)
 
 void        run_builtin(t_cmd *coms)
 {
-    if (!ft_strcmp(coms->comm, "exit"))
+    if (!ft_strcmp(coms->av[0], "exit"))
 		ft_exit(coms);
-	else if (!ft_strcmp(coms->comm, "pwd"))
+	else if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
-	else if (!ft_strcmp(coms->comm, "cd"))
+	else if (!ft_strcmp(coms->av[0], "cd"))
 		ft_cd(coms);
-	else if (!ft_strcmp(coms->comm, "env"))
+	else if (!ft_strcmp(coms->av[0], "env"))
 		ft_env();
-	else if (!ft_strcmp(coms->comm, "echo"))
+	else if (!ft_strcmp(coms->av[0], "echo"))
 		ft_echo(coms);
-    else if (!ft_strcmp(coms->comm, "setenv"))
+    else if (!ft_strcmp(coms->av[0], "setenv"))
         ft_setenv(coms);
-    else if (!ft_strcmp(coms->comm, "unsetenv"))
+    else if (!ft_strcmp(coms->av[0], "unsetenv"))
         ft_unsetenv(coms);
 }
 
@@ -152,18 +210,18 @@ void			parse_line(char **line)
     if (trim[0] == '\0')
         return (ft_strdel(&trim));
 	coms = get_coms(&trim);
-	while (coms)
+	c_p = coms;
+	while (c_p)
 	{
-		if (is_builtin(coms->comm))
-			run_builtin(coms);
-		else if ((path = is_in_path(coms)))
-			make_child(coms, path);
+		if (is_builtin(c_p->av[0]))
+			run_builtin(c_p);
+		else if ((path = is_in_path(c_p)))
+			make_child(c_p, path);
 	//	else if (/*The path exist*/)
 	//		make_child(coms, env, NULL);
         //else
             //message handling        
-        c_p = coms;
-		cmd_del(c_p);
-        coms = coms->next;
+        c_p = c_p->next;
+		cmd_del(coms);
     }
 }

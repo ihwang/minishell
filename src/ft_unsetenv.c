@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 16:29:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:39:26 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,16 @@ void		ft_unsetenv(t_cmd *c)
 	int		j;
 
 	i = -1;
-	while (++i < c->arg_nb)
+	while (++i < c->ac)
 	{
-		tild_intp(c->args[i]);
-		dollar_intp(c->args[i]);
+		tild_intp(c->av[i]);
+		dollar_intp(c->av[i]);
 		j = -1;
-		while (ft_isalnum(c->args[i][++j]))
+		while (ft_isalnum(c->av[i][++j]))
 			NULL;
-		if (c->args[i][j] != '\0')
+		if (c->av[i][j] != '\0')
 			return (ft_putstr("error\n"));
-		if (is_env(c->args[i]))
-			del_replace(c->args[i]);
+		if (is_env(c->av[i]))
+			del_replace(c->av[i]);
 	}
 }

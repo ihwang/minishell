@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/05 02:20:05 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 14:19:56 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@ char					**g_env;
 
 typedef struct dirent	t_dirent;
 
+typedef struct			s_cmd
+{
+	int					ac;
+	char				**av;
+	struct s_cmd		*next;
+}						t_cmd;
+
+/*
 typedef struct			s_comm
 {
 	char				*comm;
@@ -36,7 +44,7 @@ typedef struct			s_comm
     int             	arg_nb;
     struct s_comm   	*next;
 }                   	t_cmd;
-
+*/
 void					make_child(t_cmd *c, char *path);
 int						is_eof(char *line);
 void					sig_controller(int option);

@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 16:30:31 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 02:17:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_dirent		*is_in_path_sub(char *str, t_cmd *c)
+int				is_in_path_sub(char *str, t_cmd *c)
 {
 	DIR			*dirp;
 	t_dirent	*dir;
@@ -24,20 +24,20 @@ t_dirent		*is_in_path_sub(char *str, t_cmd *c)
 			if (!ft_strcmp(dir->d_name, c->comm))
 			{
 				closedir(dirp);
-				return (dir);
+				return (1);
 			}
 		}
 		closedir(dirp);
 	}
-	return (NULL);
+	return (0);
 }
 
-t_dirent		*is_in_path(t_cmd *c)
+char			*is_in_path(t_cmd *c)
 {
 	int			i;
 	int			nb;
 	char		**split;
-	t_dirent	*dir;
+	char		*path;
 
 	split = ft_strsplit(get_env("PATH=", VAL), ':');
 	nb = -1;
@@ -46,10 +46,12 @@ t_dirent		*is_in_path(t_cmd *c)
 	i = -1;
 	while (++i < nb)
 	{
-		if ((dir = is_in_path_sub(split[i], c)))
+		if (is_in_path_sub(split[i], c))
 		{
+			path = ft_strnew(PATH_MAX);
+			ft_strcpy(path, split[i]);
 			ft_strlst_del(&split, nb + 1);
-			return (dir);
+			return (path);
 		}
 	}
 	ft_strlst_del(&split, nb + 1);

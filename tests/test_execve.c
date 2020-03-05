@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 int main(void)
 {
@@ -19,12 +20,13 @@ int main(void)
 		buf[2] = NULL;
 		execve("foo", buf, NULL);
 		printf("Child isn't executed\n");
+		perror("");
+		printf("errno is %d\n", errno);
 	}
 	else if (pid > 0)
 	{
 		wait(NULL);
 		printf("Parent had waited for child\n");
 	}
-	while (1);
 	return (0);
 }

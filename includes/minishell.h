@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/04 17:28:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 02:20:05 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,10 @@ typedef struct			s_comm
     struct s_comm   	*next;
 }                   	t_cmd;
 
+void					make_child(t_cmd *c, char *path);
 int						is_eof(char *line);
 void					sig_controller(int option);
-t_dirent				*is_in_path(t_cmd *c);
+char					*is_in_path(t_cmd *c);
 void					ft_unsetenv(t_cmd *c);
 void					ft_setenv(t_cmd *c);
 void					ft_env(void);
@@ -50,6 +51,7 @@ void					tild_intp(char *str);
 void					dollar_intp(char *str);
 void					cmd_del(t_cmd *cmd);
 void					ft_cd(t_cmd *c);
+void					get_prompt(void);
 char					*get_env(char *name, int keyval);
 void					parse_line(char **line);
 #endif

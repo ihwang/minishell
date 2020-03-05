@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 17:27:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/04 23:43:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		sig_controller(int option)
 	if (option == PARENT)
 	{
 		signal(SIGINT, sig_int_handler);
-		signal(SIGTSTP, sig_ststp_handler);
+		signal(SIGTSTP, sig_tstp_handler);
 	}
 	else if (option == CHILD)
 	{

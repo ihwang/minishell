@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/04 16:29:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 02:18:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void			parse_line(char **line)
 {
 	t_cmd		*coms;
 	t_cmd		*c_p;
-//	t_dirent	*dir;
+	char		*path;
 	char		*trim;
 
 	trim = ft_strtrim(*line);
@@ -156,8 +156,8 @@ void			parse_line(char **line)
 	{
 		if (is_builtin(coms->comm))
 			run_builtin(coms);
-	//	else if ((dir = is_in_path(coms, env)))
-	//		make_child(coms, env, dir);
+		else if ((path = is_in_path(coms)))
+			make_child(coms, path);
 	//	else if (/*The path exist*/)
 	//		make_child(coms, env, NULL);
         //else

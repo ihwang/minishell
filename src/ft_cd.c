@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 14:39:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 16:03:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void		cd_path_finder(t_cmd *c)
 	char	*old;
 	char	*pwd;
 
-	tild_intp(c->av[0]);
-	dollar_intp(c->av[0]);
-	if (!(dirp = opendir(c->av[0])))
+	tild_intp(c->av[1]);
+	dollar_intp(c->av[1]);
+	if (!(dirp = opendir(c->av[1])))
 		return ; //error handling
 	closedir(dirp);
 	old = get_env("OLDPWD=", VAL);

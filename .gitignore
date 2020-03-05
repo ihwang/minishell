@@ -1,4 +1,5 @@
 src/*.swp
+includes/*.swp
 test/*.swp
 .DS_Store
 .vscode

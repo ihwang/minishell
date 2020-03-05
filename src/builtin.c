@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:11:58 by tango             #+#    #+#             */
-/*   Updated: 2020/03/05 14:44:39 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/05 15:00:17 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		cmd_del(t_cmd *cmd)
 {
-	ft_strlst_del(&cmd->av, cmd->ac + 1);
+	ft_strlst_del(&(cmd->av), cmd->ac + 1);
 	free(cmd);
 }
 
@@ -221,6 +221,7 @@ void			parse_line(char **line)
 	//		make_child(coms, env, NULL);
         //else
             //message handling        
+		coms = c_p;
         c_p = c_p->next;
 		cmd_del(coms);
     }

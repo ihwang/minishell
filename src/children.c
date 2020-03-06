@@ -6,35 +6,53 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 15:49:10 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 13:40:37 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		make_child(t_cmd *c, char *path)
+void		make_child_not_env(t_cmd *c)
 {
 	pid_t	pid;
-	int		wstat;
+	char	buf[PATH_MAX];
 
+	ft_strcpy(buf, c->av[0]);
 	pid = fork();
 	if (pid == 0)
 	{
 		sig_controller(CHILD);
-		ft_strcat(path, "/");
-		ft_strcat(path, c->av[0]);
-		if (access(path, X_OK))
-		{
-			ft_putstr(path);
-			ft_putstr(": command not found\n");
-			return (ft_strdel(&path));
-		}
-		execve(path, c->av, g_env);
-		//Need to change struct of args
-		//to args[0] == c->comm, args[1] == follwing
+		execve(buf, c->av, g_env);
+		ft_exit(NULL);
 	}
-	else if (pid > 0)
+	else
+		waitpid(pid, NULL, 0);
+}
+
+void		make_child_env(t_cmd *c, char *path)
+{
+	pid_t	pid;
+	char	buf[PATH_MAX];
+
+	ft_strcpy(buf, path);
+	ft_strdel(&path);
+	pid = fork();
+	if (pid == 0)
 	{
-		waitpid(pid, &wstat, 0);
+		sig_controller(CHILD);
+		ft_strcat(buf, "/");
+		ft_strcat(buf, c->av[0]);
+		if (access(buf, X_OK))
+		{
+			ft_putstr(buf);
+			ft_putstr(": Permission denied\n");
+		}
+		else
+		{
+			execve(buf, c->av, g_env);
+			ft_exit(NULL);
+		}
 	}
+	else
+		waitpid(pid, NULL, 0);
 }

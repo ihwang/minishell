@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 20:15:43 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 00:26:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 13:29:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 int main(void)
 {
-	printf("%d\n",access("/Users/ihwang/dir1", F_OK));
+	printf("%d\n",access("/Users/ihwang/42/minishell/foo", F_OK));
 	perror("");
 
 	return (0);

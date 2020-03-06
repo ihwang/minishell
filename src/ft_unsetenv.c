@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/05 14:39:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 14:02:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void		ft_unsetenv(t_cmd *c)
 	i = -1;
 	while (++i < c->ac)
 	{
-		tild_intp(c->av[i]);
-		dollar_intp(c->av[i]);
+//		tild_intp(c->av[i]);
+//		dollar_intp(c->av[i]);
 		j = -1;
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;

@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/05 14:19:56 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 14:38:04 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ typedef struct			s_comm
     struct s_comm   	*next;
 }                   	t_cmd;
 */
-void					make_child(t_cmd *c, char *path);
+
+void					print_no_cmd(char *str);
+int						there_is_e(t_cmd *c);
+int						there_is_d(t_cmd *c);
+void					make_child_not_env(t_cmd *c);
+void					make_child_env(t_cmd *c, char *path);
 int						is_eof(char *line);
 void					sig_controller(int option);
 char					*is_in_path(t_cmd *c);

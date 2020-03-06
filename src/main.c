@@ -6,31 +6,11 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 14:19:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 15:12:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char		**set_env(char **sample)
-{
-	char	**env;
-	int		i;
-
-	i = -1;
-	while (sample[++i])
-		NULL;
-	env = (char**)malloc(sizeof(char*) * (i + 1));
-	i = -1;
-	while (sample[++i])
-	{
-		env[i] = (char*)malloc(sizeof(char) * PATH_MAX);
-		ft_strcat(env[i], sample[i]);
-	}
-	env[i] = NULL;
-	return (env);
-}
-
 
 void		get_prompt(void)
 {
@@ -55,7 +35,26 @@ void		get_prompt(void)
 	ft_putstr("$ ");
 }	
 
-int			minishell()
+static char	**set_env(char **sample)
+{
+	char	**env;
+	int		i;
+
+	i = -1;
+	while (sample[++i])
+		NULL;
+	env = (char**)malloc(sizeof(char*) * (i + 1));
+	i = -1;
+	while (sample[++i])
+	{
+		env[i] = (char*)malloc(sizeof(char) * PATH_MAX);
+		ft_strcat(env[i], sample[i]);
+	}
+	env[i] = NULL;
+	return (env);
+}
+
+static int	minishell(void)
 {
 	char	*line;
 

@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/02 02:25:45 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 16:20:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 14:52:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		tild_intp(char *str)
+static void	tild_intp(char *str)
 {
 	char	*home;
 	char	temp[PATH_MAX];
@@ -27,7 +27,7 @@ void		tild_intp(char *str)
 	}
 }
 
-void		dollar_intp(char *str)
+static void	dollar_intp(char *str)
 {
 	int		i;
 	int		j;
@@ -53,5 +53,17 @@ void		dollar_intp(char *str)
 				ft_strcat(str, copy);
 			}
 		}
+	}
+}
+
+void			apply_t_d(t_cmd *c)
+{
+	int			i;
+
+	i = -1;
+	while (++i < c->ac)
+	{
+		tild_intp(c->av[i]);
+		dollar_intp(c->av[i]);
 	}
 }

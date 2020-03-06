@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 14:01:57 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 15:23:13 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		add_env(char *arg)
+static void	add_env(char *arg)
 {
 	int		i;
 	char	**temp;
@@ -31,7 +31,7 @@ void		add_env(char *arg)
 	g_env = temp;
 }
 
-void		ft_setenv_sub(char *arg)
+static void	ft_setenv_sub(char *arg)
 {
 	char	**split;
 	char	*var;
@@ -54,7 +54,7 @@ void		ft_setenv_sub(char *arg)
 	ft_strlst_del(&split, j + 1);
 }
 
-void		ft_setenv(t_cmd *c)
+static void	ft_setenv(t_cmd *c)
 {
 	int		i;
 	int		j;
@@ -62,8 +62,6 @@ void		ft_setenv(t_cmd *c)
 	i = 0;
 	while (++i < c->ac)
 	{
-//		tild_intp(c->av[i]);
-//		dollar_intp(c->av[i]);
 		j = -1;
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;

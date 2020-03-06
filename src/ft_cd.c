@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 14:39:09 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 15:22:41 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		cd_shaping_env(char *str)
+static void	cd_shaping_env(char *str)
 {
 	char	**split;
 	char	*pwd;
@@ -39,15 +39,13 @@ void		cd_shaping_env(char *str)
 	ft_strlst_del(&split, i + 1);
 }
 
-void		cd_path_finder(t_cmd *c)
+static void	cd_path_finder(t_cmd *c)
 {
 	char	*old;
 	char	*pwd;
 
-//	tild_intp(c->av[1]);
-//	dollar_intp(c->av[1]);
 	if (!there_is_d(c))
-		return ; //need to test
+		return ;
 	old = get_env("OLDPWD=", VAL);
 	ft_bzero(old, PATH_MAX - 7);
 	pwd = get_env("PWD=", VAL);
@@ -62,7 +60,7 @@ void		cd_path_finder(t_cmd *c)
 		cd_shaping_env(c->av[1]);
 }
 
-void        cd_no_arg(void)
+static void	cd_no_arg(void)
 {
     char    *pwd;
     char    *home;
@@ -78,7 +76,7 @@ void        cd_no_arg(void)
 	chdir(home);
 }
 
-void        cd_exchange(void)
+static void	cd_exchange(void)
 {
     char    *pwd;
     char    *old;
@@ -97,7 +95,7 @@ void        cd_exchange(void)
 	chdir(pwd);
 }
 
-void        ft_cd(t_cmd *c)
+void		ft_cd(t_cmd *c)
 {
     if (c->ac == 1)
         cd_no_arg();

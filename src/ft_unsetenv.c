@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 14:02:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 15:23:33 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		del_replace(char *str)
+static void	del_replace(char *str)
 {
 	int		nb;
 	int		i;
@@ -37,7 +37,7 @@ void		del_replace(char *str)
 	g_env = temp;
 }
 
-int			is_env(char *str)
+static int	is_env(char *str)
 {
 	int		i;
 	char	*dot;
@@ -62,17 +62,15 @@ void		ft_unsetenv(t_cmd *c)
 	int		i;
 	int		j;
 
-	i = -1;
+	i = 0;
 	while (++i < c->ac)
 	{
-//		tild_intp(c->av[i]);
-//		dollar_intp(c->av[i]);
 		j = -1;
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;
 		if (c->av[i][j] != '\0')
-			return (ft_putstr("error\n"));
-		if (is_env(c->av[i]))
+			print_unsetenv(c->av[i]);
+		else if (is_env(c->av[i]))
 			del_replace(c->av[i]);
 	}
 }

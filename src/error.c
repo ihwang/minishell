@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:48:26 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 17:58:29 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 18:51:25 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int				there_is_p(t_cmd *c)
 			ft_putstr_fd(c->av[0], 2);
 			ft_putstr_fd(": No such file or directory\n", 2);
 			return (0);
-		}	
+		}
 		else if (access(c->av[0], X_OK))
 		{
 			ft_putstr_fd(c->av[0], 2);

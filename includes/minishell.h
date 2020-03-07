@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/07 17:23:00 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 18:54:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@
 # define UNSET 0
 # define F_TYPE_MASK 0170000
 
-#include <sys/wait.h>
-#include <sys/stat.h>
-#include <signal.h>
-#include <dirent.h>
-#include <limits.h>
-#include <stdio.h>
-#include "../libft/includes/libft.h"
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <dirent.h>
+# include <limits.h>
+# include <stdio.h>
+# include "../libft/includes/libft.h"
 
 char					**g_env;
 

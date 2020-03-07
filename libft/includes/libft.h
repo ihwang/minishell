@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/02/28 22:02:30 by tango            ###   ########.fr       */
+/*   Updated: 2020/03/07 18:53:40 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-void                ft_strlst_del(char ***target, int nb);
+void				ft_strlst_del(char ***target, int nb);
 char				*ft_strstr_e(const char *haystack, const char *needle);
-int                 get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
 char				*ft_itoh(int nb);
 unsigned long		ft_nbrlen(int nb);
 void				*ft_memset(void *pt, int value, size_t len);

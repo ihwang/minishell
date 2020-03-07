@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 19:58:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:28:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,10 @@ void		ft_setenv(t_cmd *c)
 		j = -1;
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;
-		if (c->av[i][j] =='\0')
-			return ;
+		if (c->av[i][j] == '\0')
+			;
 		else if (c->av[i][j] != '=' || j == 0)
-			return (ft_putstr("errro\n"));
+			print_set_unset(c->av[i], SET);
 		else
 			ft_setenv_sub(c->av[i]);
 	}

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:23:33 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:25:52 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void		ft_unsetenv(t_cmd *c)
 		while (ft_isalnum(c->av[i][++j]))
 			NULL;
 		if (c->av[i][j] != '\0')
-			print_unsetenv(c->av[i]);
+			print_set_unset(c->av[i], UNSET);
 		else if (is_env(c->av[i]))
 			del_replace(c->av[i]);
 	}

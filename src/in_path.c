@@ -6,16 +6,16 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:00:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:30:34 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int		is_in_path_sub(char *str, t_cmd *c)
+static int	is_in_path_sub(char *str, t_cmd *c)
 {
-	DIR			*dirp;
-	t_dirent	*dir;
+	DIR		*dirp;
+	t_dir	*dir;
 
 	if ((dirp = opendir(str)))
 	{
@@ -32,12 +32,12 @@ static int		is_in_path_sub(char *str, t_cmd *c)
 	return (0);
 }
 
-char			*is_in_path(t_cmd *c)
+char		*is_in_path(t_cmd *c)
 {
-	int			i;
-	int			nb;
-	char		**split;
-	char		*path;
+	int		i;
+	int		nb;
+	char	**split;
+	char	*path;
 
 	if (c->av[0][0] == '.' || c->av[0][0] == '/')
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 13:40:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 17:22:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 void		make_child_not_env(t_cmd *c)
 {
 	pid_t	pid;
+	t_stat	sb;
 	char	buf[PATH_MAX];
 
+	lstat(c->av[0], &sb);
+	if ((sb.st_mode & F_TYPE_MASK) != S_IFREG)
+		return (print_is_dir(c->av[0]));
 	ft_strcpy(buf, c->av[0]);
 	pid = fork();
 	if (pid == 0)
@@ -44,8 +48,8 @@ void		make_child_env(t_cmd *c, char *path)
 		ft_strcat(buf, c->av[0]);
 		if (access(buf, X_OK))
 		{
-			ft_putstr(buf);
-			ft_putstr(": Permission denied\n");
+			ft_putstr_fd(buf, 2);
+			ft_putstr_fd(": Permission denied\n", 2);
 		}
 		else
 		{

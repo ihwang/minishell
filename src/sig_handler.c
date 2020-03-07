@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 17:21:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/04 23:43:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:08:20 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	sig_int_handler(int sig)
 	int		a;
 
 	a = sig;
-	putchar('\n');
+	ft_putchar('\n');
 	get_prompt();
 	signal(SIGINT, sig_int_handler);
 }
@@ -34,7 +34,7 @@ static void	sig_tstp_handler(int sig)
 	int		a;
 
 	a = sig;
-	putchar('\n');
+	ft_putchar('\n');
 	get_prompt();
 	signal(SIGTSTP, sig_tstp_handler);
 }

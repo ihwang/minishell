@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:27:58 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 17:18:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ static void		run_builtin(t_cmd *coms)
 void			execute_cmd(t_cmd *c, char *path)
 {
 	if (is_builtin(c->av[0]))
-		run_builtin(c);
+		return (run_builtin(c));
 	else if ((path = is_in_path(c)))
-		make_child_env(c, path);
-	else if (there_is_e(c))
+		return (make_child_env(c, path));
+	if (there_is_p(c))
 		make_child_not_env(c);
-	else
+	else if (c->av[0][0] != '.' && c->av[0][0] != '/')
 		print_no_cmd(c->av[0]);
 }

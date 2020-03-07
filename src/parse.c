@@ -6,16 +6,16 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:28:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:34:32 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void		get_cmd_arg(char *cmd, t_cmd *c)
+void			get_cmd_arg(char *cmd, t_cmd *c)
 {
-	char	**split;
-	int		i;
+	char		**split;
+	int			i;
 
 	i = -1;
 	split = ft_strsplit(cmd, ' ');
@@ -34,13 +34,13 @@ void		get_cmd_arg(char *cmd, t_cmd *c)
 	ft_strlst_del(&split, i + 1);
 }
 
-t_cmd		*get_coms(char **line)
+t_cmd			*get_coms(char **line)
 {
-	char    **cmd_lst;
-	int     i;
-	t_cmd  *coms;
-	t_cmd  *c_t;
-	t_cmd  *c_p;
+	char		**cmd_lst;
+	int			i;
+	t_cmd		*coms;
+	t_cmd		*c_t;
+	t_cmd		*c_p;
 
 	cmd_lst = ft_strsplit(*line, ';');
 	ft_strdel(line);

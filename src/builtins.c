@@ -6,51 +6,51 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:27:26 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 18:44:53 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void        ft_env(void)
+void		ft_env(void)
 {
-    int     i;
+	int		i;
 
-    i = -1;
-    while (g_env[++i])
-    {
-        ft_putstr(g_env[i]);
-        ft_putstr("\n");
-    }
+	i = -1;
+	while (g_env[++i])
+	{
+		ft_putstr(g_env[i]);
+		ft_putstr("\n");
+	}
 }
 
-void        ft_pwd(void)
+void		ft_pwd(void)
 {
-    char    *pwd;
+	char	*pwd;
 
-    pwd = get_env("PWD=", VAL);
-    ft_putstr(pwd);
-    ft_putstr("\n");
+	pwd = get_env("PWD=", VAL);
+	ft_putstr(pwd);
+	ft_putstr("\n");
 }
 
-void        ft_exit(t_cmd *coms)
+void		ft_exit(t_cmd *coms)
 {
-    t_cmd  *c_p;
-    int     i;
+	t_cmd	*c_p;
+	int		i;
 
 	!coms ? ft_putstr("\nlogout\n") : ft_putstr("logout\n");
-    while (coms)
-    {
-        c_p = coms;
-        coms = coms->next;
-        cmd_del(c_p);
-    }
-    i = -1;
-    while (g_env[++i])
-        ft_strdel(&g_env[i]);
-    ft_strdel(&g_env[i]);
-    free(g_env);
-    exit(0);
+	while (coms)
+	{
+		c_p = coms;
+		coms = coms->next;
+		cmd_del(c_p);
+	}
+	i = -1;
+	while (g_env[++i])
+		ft_strdel(&g_env[i]);
+	ft_strdel(&g_env[i]);
+	free(g_env);
+	exit(0);
 }
 
 void		ft_echo(t_cmd *c)

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 14:49:46 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:23:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:33:35 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void		cmd_del(t_cmd *c)
 	free(c);
 }
 
-char        *get_env(char *name, int keyval)
+char		*get_env(char *name, int keyval)
 {
-	int     i;
+	int		i;
 	char	*ret;
 
 	i = -1;

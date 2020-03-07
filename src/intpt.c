@@ -6,16 +6,16 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:10 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:28:12 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:35:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	tild_intp(char *str)
+static void		tild_intp(char *str)
 {
-	char	*home;
-	char	temp[PATH_MAX];
+	char		*home;
+	char		temp[PATH_MAX];
 
 	if (str[0] == '~' && (str[1] == '\0' || str[1] == '/'))
 	{
@@ -27,12 +27,12 @@ static void	tild_intp(char *str)
 	}
 }
 
-static void	dollar_intp(char *str)
+static void		dollar_intp(char *str)
 {
-	int		i;
-	int		j;
-	char	copy[PATH_MAX];
-	char	target[PATH_MAX];
+	int			i;
+	int			j;
+	char		copy[PATH_MAX];
+	char		target[PATH_MAX];
 
 	i = -1;
 	while (str[++i])

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:12:08 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 16:33:15 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void		get_prompt(void)
 	ft_putstr(" ");
 	ft_putstr(user);
 	ft_putstr("$ ");
-}	
+}
 
 static char	**set_env(char **sample)
 {

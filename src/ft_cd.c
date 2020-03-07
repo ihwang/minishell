@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:22:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/07 17:41:00 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	cd_path_finder(t_cmd *c)
 {
 	char	*old;
 	char	*pwd;
+	char	temp_pwd[PATH_MAX];
 
 	if (!there_is_d(c))
 		return ;
@@ -52,9 +53,11 @@ static void	cd_path_finder(t_cmd *c)
 	ft_strcat(old, pwd);
 	if (c->av[1][0] == '/')
 	{
+		ft_strcpy(temp_pwd, c->av[1]);
+		chdir(temp_pwd);
+		getcwd(temp_pwd, PATH_MAX);
 		ft_bzero(pwd, PATH_MAX - 4);
-		ft_strcat(pwd, c->av[1]);
-		chdir(pwd);
+		ft_strcat(pwd, temp_pwd);
 	}
 	else
 		cd_shaping_env(c->av[1]);
@@ -62,34 +65,34 @@ static void	cd_path_finder(t_cmd *c)
 
 static void	cd_no_arg(void)
 {
-    char    *pwd;
-    char    *home;
-    char    *old;
+	char	*pwd;
+	char	*home;
+	char	*old;
 
-    pwd = get_env("PWD=", VAL);
-    home = get_env("HOME=", VAL);
-    old = get_env("OLDPWD=", VAL);
-    ft_bzero(old, PATH_MAX - 7);
-    ft_strcat(old, pwd);
-    ft_bzero(pwd, PATH_MAX - 4);
-    ft_strcat(pwd, home);
+	pwd = get_env("PWD=", VAL);
+	home = get_env("HOME=", VAL);
+	old = get_env("OLDPWD=", VAL);
+	ft_bzero(old, PATH_MAX - 7);
+	ft_strcat(old, pwd);
+	ft_bzero(pwd, PATH_MAX - 4);
+	ft_strcat(pwd, home);
 	chdir(home);
 }
 
 static void	cd_exchange(void)
 {
-    char    *pwd;
-    char    *old;
-    char    *temp;
+	char	*pwd;
+	char	*old;
+	char	*temp;
 
-    temp = (char*)malloc(PATH_MAX);
-    ft_bzero(temp, PATH_MAX);
-    pwd = get_env("PWD=", VAL);
+	temp = (char*)malloc(PATH_MAX);
+	ft_bzero(temp, PATH_MAX);
+	pwd = get_env("PWD=", VAL);
 	ft_strcat(temp, pwd);
-    old = get_env("OLDPWD=", VAL);
-    ft_bzero(pwd, PATH_MAX - 4);
-    ft_strcat(pwd, old);
-    ft_bzero(old, PATH_MAX - 7);
+	old = get_env("OLDPWD=", VAL);
+	ft_bzero(pwd, PATH_MAX - 4);
+	ft_strcat(pwd, old);
+	ft_bzero(old, PATH_MAX - 7);
 	ft_strcat(old, temp);
 	ft_strdel(&temp);
 	chdir(pwd);
@@ -97,10 +100,10 @@ static void	cd_exchange(void)
 
 void		ft_cd(t_cmd *c)
 {
-    if (c->ac == 1)
-        cd_no_arg();
-    else if (!ft_strcmp(c->av[1], "-"))
-        cd_exchange();
+	if (c->ac == 1)
+		cd_no_arg();
+	else if (!ft_strcmp(c->av[1], "-"))
+		cd_exchange();
 	else
 		cd_path_finder(c);
 }

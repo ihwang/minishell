@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 00:41:54 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/06 15:23:13 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/06 19:58:14 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	ft_setenv_sub(char *arg)
 	ft_strlst_del(&split, j + 1);
 }
 
-static void	ft_setenv(t_cmd *c)
+void		ft_setenv(t_cmd *c)
 {
 	int		i;
 	int		j;

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:28:25 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:34:32 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/09 19:54:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ void			get_cmd_arg(char *cmd, t_cmd *c)
 	int			i;
 
 	i = -1;
-	split = ft_strsplit(cmd, ' ');
+	if (ft_check_d_quote(cmd))
+		split = ft_split_d_quote(cmd);
+	else
+		split = ft_strsplit(cmd, ' ');
 	while (split[++i])
 		NULL;
 	c->ac = i;
@@ -42,7 +45,10 @@ t_cmd			*get_coms(char **line)
 	t_cmd		*c_t;
 	t_cmd		*c_p;
 
-	cmd_lst = ft_strsplit(*line, ';');
+	if (ft_check_d_quote(*line))
+		cmd_lst = ft_split_shell(*line, ';');
+	else
+		cmd_lst = ft_strsplit(*line, ';');
 	ft_strdel(line);
 	coms = (t_cmd*)malloc(sizeof(t_cmd));
 	get_cmd_arg(cmd_lst[0], coms);
@@ -71,6 +77,8 @@ void			parse_line(char **line)
 	ft_strdel(line);
 	if (trim[0] == '\0')
 		return (ft_strdel(&trim));
+	if (trim[0] == ';')
+		return (print_semicolon_error(trim));
 	coms = get_coms(&trim);
 	c_p = coms;
 	while (c_p)

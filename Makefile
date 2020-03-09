@@ -9,7 +9,8 @@ INC = -I ./includes/ -I ./libft/includes
 SRCS_NAME = main.c \
 			builtins.c \
 			children.c \
-			error.c \
+			error1.c \
+			error2.c \
 			execute.c \
 			ft_cd.c \
 			ft_setenv.c \

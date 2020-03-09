@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 16:02:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 18:53:40 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/09 19:56:49 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct		s_list
 {
@@ -26,6 +27,13 @@ typedef struct		s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_check_d_quote(char *str);
+char				**ft_split_shell(char *str, char c);
+char				**ft_split_d_quote(char const *s);
+int					ft_iswhite(char c);
+char				*ft_addchar(char *str, char c);
+char				*ft_strtrim_d_quote(char const *s);
+int					ft_is_d_quote(char c);
 void				ft_strlst_del(char ***target, int nb);
 char				*ft_strstr_e(const char *haystack, const char *needle);
 int					get_next_line(const int fd, char **line);

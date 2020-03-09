@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/07 18:54:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/09 20:14:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct			s_cmd
 	struct s_cmd		*next;
 }						t_cmd;
 
+void					print_semicolon_error(char *line);
 void					print_is_dir(char *str);
 void					print_no_cmd(char *str);
 void					print_set_unset(char *str, int opt);

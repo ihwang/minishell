@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/10 18:00:46 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/10 18:02:47 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	del_replace(int index)
 	while (++i < nb - 1)
 	{
 		if (i != index)
-		//if (!ft_strstr(g_env[i], str))
 		{
 			temp[j] = (char*)malloc(PATH_MAX);
 			ft_strcpy(temp[j++], g_env[i]);

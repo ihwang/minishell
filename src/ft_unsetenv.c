@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:25:52 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/10 17:57:23 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	del_replace(char *str)
+static void	del_replace(char *str, int index)
 {
 	int		nb;
 	int		i;
@@ -27,7 +27,8 @@ static void	del_replace(char *str)
 	j = 0;
 	while (++i < nb - 1)
 	{
-		if (!ft_strstr(g_env[i], str))
+		if (i != index)
+		//if (!ft_strstr(g_env[i], str))
 		{
 			temp[j] = (char*)malloc(PATH_MAX);
 			ft_strcpy(temp[j++], g_env[i]);
@@ -50,7 +51,7 @@ static int	is_env(char *str)
 		if (!ft_strcmp(g_env[i], str))
 		{
 			*dot = '=';
-			return (1);
+			return (i);
 		}
 		*dot = '=';
 	}
@@ -61,6 +62,7 @@ void		ft_unsetenv(t_cmd *c)
 {
 	int		i;
 	int		j;
+	int		index;
 
 	i = 0;
 	while (++i < c->ac)
@@ -70,7 +72,7 @@ void		ft_unsetenv(t_cmd *c)
 			NULL;
 		if (c->av[i][j] != '\0')
 			print_set_unset(c->av[i], UNSET);
-		else if (is_env(c->av[i]))
-			del_replace(c->av[i]);
+		else if ((index = is_env(c->av[i])))
+			del_replace(c->av[i], index);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:33:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/10 17:09:58 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void		get_prompt(void)
 	user = get_env("USER=", VAL);
 	pwd = get_env("PWD=", VAL);
 	home = get_env("HOME=", VAL);
+	ft_putstr("Minishell ");
 	if (!ft_strcmp(pwd, home))
 		ft_putstr(pwd);
 	else if (ft_strstr(pwd, home))

@@ -13,6 +13,7 @@ SRCS_NAME = main.c \
 			error2.c \
 			execute.c \
 			ft_cd.c \
+			ft_cd_old.c \
 			ft_setenv.c \
 			ft_unsetenv.c \
 			in_path.c \

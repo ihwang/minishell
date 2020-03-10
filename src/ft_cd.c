@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/09 20:39:07 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/10 17:18:19 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ static void	cd_path_finder(t_cmd *c)
 		ft_bzero(old, PATH_MAX - 7);
 		ft_strcat(old, pwd);
 	}
+	else
+		make_old();
 	if (c->av[1][0] == '/')
 	{
 		ft_strcpy(temp_pwd, c->av[1]);
@@ -64,8 +66,6 @@ static void	cd_path_finder(t_cmd *c)
 	else
 		cd_shaping_env(c->av[1]);
 }
-///////////////////////HERE!!!!!!!!!!!!!!!!!1///////
-//씨디 완벽하게 만들기 중...
 
 static void	cd_no_arg(void)
 {
@@ -81,7 +81,8 @@ static void	cd_no_arg(void)
 		ft_bzero(old, PATH_MAX - 7);
 		ft_strcat(old, pwd);
 	}
-
+	else
+		make_old();
 	ft_bzero(pwd, PATH_MAX - 4);
 	ft_strcat(pwd, home);
 	chdir(home);
@@ -104,7 +105,8 @@ static void	cd_exchange(void)
 		ft_bzero(old, PATH_MAX - 7);
 		ft_strcat(old, temp);
 	}
-	//else
+	else
+		ft_putstr("cd: OLDPWD not set\n");
 	ft_strdel(&temp);
 	chdir(pwd);
 }

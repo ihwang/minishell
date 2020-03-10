@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/10 17:57:23 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/10 18:00:46 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	del_replace(char *str, int index)
+static void	del_replace(int index)
 {
 	int		nb;
 	int		i;
@@ -73,6 +73,6 @@ void		ft_unsetenv(t_cmd *c)
 		if (c->av[i][j] != '\0')
 			print_set_unset(c->av[i], UNSET);
 		else if ((index = is_env(c->av[i])))
-			del_replace(c->av[i], index);
+			del_replace(index);
 	}
 }

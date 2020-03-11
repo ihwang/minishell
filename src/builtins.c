@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 13:44:02 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:52:30 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void		ft_pwd(void)
 
 	getcwd(pwd, PATH_MAX);
 	ft_putstr(pwd);
-	//////////HERE
 	ft_putstr("\n");
 }
 
-void		ft_exit(t_cmd *coms)
+void		ft_exit(t_cmd *coms, int opt)
 {
 	t_cmd	*c_p;
 	int		i;
 
-	!coms ? ft_putstr("\nlogout\n") : ft_putstr("logout\n");
+	if (opt == PRINT)
+		!coms ? ft_putstr("\nlogout\n") : ft_putstr("logout\n");
 	while (coms)
 	{
 		c_p = coms;
@@ -51,7 +51,7 @@ void		ft_exit(t_cmd *coms)
 		ft_strdel(&g_env[i]);
 	ft_strdel(&g_env[i]);
 	free(g_env);
-	exit(0);
+	opt == ER ? exit(-1) : exit(0);
 }
 
 void		ft_echo(t_cmd *c)

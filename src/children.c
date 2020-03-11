@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 14:14:05 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 17:22:20 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:53:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,46 @@ void		make_child_not_env(t_cmd *c)
 	{
 		sig_controller(CHILD);
 		execve(buf, c->av, g_env);
-		ft_exit(NULL);
+		ft_exit(c, ER);
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_status, 0);
 }
 
-void		make_child_env(t_cmd *c, char *path)
+static void	make_child_env_sub(t_cmd *c, char buf[])
 {
 	pid_t	pid;
-	char	buf[PATH_MAX];
 
-	ft_strcpy(buf, path);
-	ft_strdel(&path);
 	pid = fork();
 	if (pid == 0)
 	{
 		sig_controller(CHILD);
-		ft_strcat(buf, "/");
-		ft_strcat(buf, c->av[0]);
-		if (access(buf, X_OK))
-		{
-			ft_putstr_fd(buf, 2);
-			ft_putstr_fd(": Permission denied\n", 2);
-		}
-		else
-		{
-			execve(buf, c->av, g_env);
-			ft_exit(NULL);
-		}
+		execve(buf, c->av, g_env);
+		ft_exit(c, ER);
 	}
 	else
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &g_status, 0);
+}
+
+void		make_child_env(t_cmd *c, char *path)
+{
+	char	buf[PATH_MAX];
+
+	ft_strcpy(buf, path);
+	ft_strdel(&path);
+	if (access(buf, X_OK))
+	{
+		ft_putstr_fd(buf, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+		return ;
+	}
+	ft_strcat(buf, "/");
+	ft_strcat(buf, c->av[0]);
+	if (!access(buf, X_OK))
+		make_child_env_sub(c, buf);
+	else
+	{
+		ft_putstr_fd(buf, 2);
+		ft_putstr_fd(": Permission denied\n", 2);
+	}
 }

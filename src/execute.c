@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:56 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 17:18:14 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:29:08 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		is_builtin(char *comm)
 static void		run_builtin(t_cmd *coms)
 {
 	if (!ft_strcmp(coms->av[0], "exit"))
-		ft_exit(coms);
+		ft_exit(coms, PRINT);
 	else if (!ft_strcmp(coms->av[0], "pwd"))
 		ft_pwd();
 	else if (!ft_strcmp(coms->av[0], "cd"))

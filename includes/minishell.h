@@ -6,7 +6,7 @@
 /*   By: tango <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/27 20:03:40 by tango             #+#    #+#             */
-/*   Updated: 2020/03/11 15:15:15 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:28:38 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define SET 1
 # define UNSET 0
 # define F_TYPE_MASK 0170000
+# define PRINT 1
+# define ER 0
 
 # include <sys/wait.h>
 # include <sys/stat.h>
@@ -29,6 +31,7 @@
 # include "../libft/includes/libft.h"
 
 char					**g_env;
+int						g_status;
 
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
@@ -52,7 +55,7 @@ int						is_eof(char *line);
 char					*is_in_path(t_cmd *c);
 void					ft_pwd(void);
 void					ft_echo(t_cmd *c);
-void					ft_exit(t_cmd *comm);
+void					ft_exit(t_cmd *comm, int opt);
 void					ft_env(void);
 void					ft_cd(t_cmd *c);
 void					ft_unsetenv(t_cmd *c);

@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 20:06:49 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 15:44:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 16:00:05 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static void	cd_no_arg(void)
 	char	*old;
 
 	if (!(home = get_env("HOME=", VAL)))
-		return (ft_putstr("cd: HOME not set"));
+		return (ft_putstr("cd: HOME not set\n"));
 	getcwd(pwd, PATH_MAX);
 	if ((old = get_env("OLDPWD=", VAL)))
 		ft_strcpy(old, pwd);

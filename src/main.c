@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 14:43:37 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 15:57:51 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,24 @@ void		get_prompt(void)
 	char	*home;
 	char	pwd[PATH_MAX];
 
-	user = get_env("USER=", VAL);
-	ft_bzero(pwd, PATH_MAX);
 	getcwd(pwd, PATH_MAX);
-	home = get_env("HOME=", VAL);
 	ft_putstr("Minishell ");
-	if (!ft_strcmp(pwd, home))
-		ft_putstr(pwd);
-	else if (ft_strstr(pwd, home))
+	if ((home = get_env("HOME=", VAL)))
 	{
-		ft_putstr("~");
-		ft_putstr(ft_strstr_e(pwd, home));
+		if (!ft_strcmp(pwd, home))
+			ft_putstr(pwd);
+		else if (ft_strstr(pwd, home))
+		{
+			ft_putstr("~");
+			ft_putstr(ft_strstr_e(pwd, home));
+		}
+		else
+			ft_putstr(pwd);
 	}
 	else
 		ft_putstr(pwd);
 	ft_putstr(" ");
-	ft_putstr(user);
+	(user = get_env("USER=", VAL)) ? ft_putstr(user) : 0;
 	ft_putstr("$ ");
 }
 

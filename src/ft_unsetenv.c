@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:41:57 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/10 18:02:47 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 13:25:45 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ static void	del_replace(int index)
 	nb = -1;
 	while (g_env[++nb])
 		NULL;
-	temp = (char**)malloc(sizeof(char*) * nb - 1);
+	temp = (char**)malloc(sizeof(char*) * nb);
 	i = -1;
 	j = 0;
-	while (++i < nb - 1)
+	while (++i < nb)
 	{
 		if (i != index)
 		{
@@ -33,6 +33,7 @@ static void	del_replace(int index)
 			ft_strcpy(temp[j++], g_env[i]);
 		}
 	}
+	temp[j] = NULL;
 	ft_strlst_del(&g_env, nb + 1);
 	g_env = temp;
 }

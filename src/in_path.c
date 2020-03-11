@@ -6,13 +6,13 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/03 18:52:07 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/07 16:30:34 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 12:45:36 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static int	is_in_path_sub(char *str, t_cmd *c)
+static int	is_in_path_sub2(char *str, t_cmd *c)
 {
 	DIR		*dirp;
 	t_dir	*dir;
@@ -32,6 +32,18 @@ static int	is_in_path_sub(char *str, t_cmd *c)
 	return (0);
 }
 
+static char	**check_path(t_cmd *c)
+{
+	char	*path;
+
+	if (c->av[0][0] == '.' || c->av[0][0] == '/')
+		return (NULL);
+	if ((path = get_env("PATH=", VAL)))
+		return (ft_strsplit(path, ':'));
+	else
+		return (NULL);
+}
+
 char		*is_in_path(t_cmd *c)
 {
 	int		i;
@@ -39,16 +51,15 @@ char		*is_in_path(t_cmd *c)
 	char	**split;
 	char	*path;
 
-	if (c->av[0][0] == '.' || c->av[0][0] == '/')
+	if (!(split = check_path(c)))
 		return (NULL);
-	split = ft_strsplit(get_env("PATH=", VAL), ':');
 	nb = -1;
 	while (split[++nb])
 		NULL;
 	i = -1;
 	while (++i < nb)
 	{
-		if (is_in_path_sub(split[i], c))
+		if (is_in_path_sub2(split[i], c))
 		{
 			path = ft_strnew(PATH_MAX);
 			ft_strcpy(path, split[i]);

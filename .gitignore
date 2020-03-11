@@ -1,6 +1,4 @@
-src/*.swp
-includes/*.swp
-test/*.swp
+*.swp
 .DS_Store
 .vscode
 # Prerequisites

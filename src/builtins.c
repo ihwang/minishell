@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:27:24 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/09 16:10:41 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 13:44:02 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ void		ft_env(void)
 
 void		ft_pwd(void)
 {
-	char	*pwd;
+	char	pwd[PATH_MAX];
 
-	pwd = get_env("PWD=", VAL);
+	getcwd(pwd, PATH_MAX);
 	ft_putstr(pwd);
+	//////////HERE
 	ft_putstr("\n");
 }
 

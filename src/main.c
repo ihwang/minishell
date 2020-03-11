@@ -6,7 +6,7 @@
 /*   By: ihwang <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/26 20:14:36 by ihwang            #+#    #+#             */
-/*   Updated: 2020/03/11 20:29:38 by ihwang           ###   ########.fr       */
+/*   Updated: 2020/03/11 20:59:50 by ihwang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ static int	minishell(void)
 	while (1)
 	{
 		sig_controller(PARENT);
-		printf("g_status is %d\n", g_status);
-		printf("exitstatus is %d\n", WEXITSTATUS(g_status));
 		WIFSIGNALED(g_status) ? 0 : get_prompt();
 		g_status = 0;
 		get_next_line(0, &line);
